@@ -28,7 +28,7 @@ router.post("/", async (req, res) => {
       {
         sender: {
           name: "Teni Hair & Beauty Studio",
-          email: "no-reply@tenihair.com",
+          email: "tayek62@gmail.com",
         },
         to: [{ email: "tayek62@gmail.com" }],
         subject: "New Booking Received",
@@ -53,7 +53,7 @@ router.post("/", async (req, res) => {
       {
         sender: {
           name: "Teni Hair & Beauty Studio",
-          email: "no-reply@tenihair.com",
+          email: "tayek62@gmail.com",
         },
         to: [{ email }],
         subject: "Booking Confirmed – Teni Hair & Beauty Studio",
