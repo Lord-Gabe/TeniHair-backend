@@ -18,15 +18,22 @@ router.post("/", async (req, res) => {
     } = req.body;
 
 
-    const transporter = nodemailer.createTransport({
-      service: "gmail",
+    // const transporter = nodemailer.createTransport({ //Gmail
+    //   service: "gmail",
+    //   auth: {
+    //     user: process.env.MAIL_USER,
+    //     pass: process.env.MAIL_PASS,
+    //   },
+    // });
+
+    const transporter = nodemailer.createTransport({ //Brevo
+      host: "smtp-relay.brevo.com",
+      port: 587,
+      secure: false,
       auth: {
-        user: process.env.MAIL_USER,
-        pass: process.env.MAIL_PASS,
+        user: process.env.BREVO_USER,
+        pass: process.env.BREVO_API_KEY,
       },
-      tls:{
-        rejectUnauthorized:false,
-      }
     });
 
     const formatTime = (time) => {
@@ -39,8 +46,7 @@ router.post("/", async (req, res) => {
 
     // ADMIN EMAIL
     await transporter.sendMail({
-        from: `Teni Hair & Beauty Studio <${process.env.MAIL_USER}>`,
-        replyTo: email, // replies go to client
+        from: `Teni Hair & Beauty Studio <noreply@tenihair.com>`,
         to: process.env.MAIL_USER,
         subject: "New Booking Received",
         html: `
@@ -58,7 +64,7 @@ router.post("/", async (req, res) => {
 
     // CLIENT AUTO-REPLY
     await transporter.sendMail({
-      from: `Teni Hair & Beauty Studio <${process.env.MAIL_USER}>`,
+      from: `Teni Hair & Beauty Studio <no-reply@tenihair.com>`,
       to: email,
       subject: "Booking Confirmed – Teni Hair & Beauty Studio",
       html: `
@@ -68,9 +74,9 @@ router.post("/", async (req, res) => {
         <p><strong>Service:</strong> ${service}</p>
         <p><strong>Subservice:</strong> ${subservice}</p>
         <p><strong>Specification:</strong> ${subservice2}</p>
-        <p><strong>Date:</strong> ${date || "Nil"}</p>
-        <p><strong>Time:</strong> ${formatTime(time) || "Nil"}</p>
-        <p><strong>Message:</strong> ${message || "None"}</p>
+        <p><strong>Booked Date:</strong> ${date || "Nil"}</p>
+        <p><strong>Booked time:</strong> ${formatTime(time) || "Nil"}</p>
+        <p><strong>Your description to us:</strong> ${message || "None"}</p>
         <p>We look forward to seeing you</p>
       `,
     });
