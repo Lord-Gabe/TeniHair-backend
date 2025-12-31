@@ -19,9 +19,7 @@ router.post("/", async (req, res) => {
 
 
     const transporter = nodemailer.createTransport({
-      host: process.env.MAIL_HOST,
-      port: Number(process.env.MAIL_PORT),
-      secure: false,
+      service: "gmail",
       auth: {
         user: process.env.MAIL_USER,
         pass: process.env.MAIL_PASS,
@@ -29,7 +27,7 @@ router.post("/", async (req, res) => {
     });
 
     const formatTime = (time) => {
-      const [hour, minute] = time.split(":").map(Number);
+      const [hour] = time.split(":").map(Number);
       const period = hour >= 12 ? "PM" : "AM";
       const displayHour = hour % 12 || 12;
       return `${displayHour}:${"00"} ${period}`;
@@ -38,9 +36,9 @@ router.post("/", async (req, res) => {
 
     // ADMIN EMAIL
     await transporter.sendMail({
-        from: `Teni Hair & Beauty Studio`,
+        from: `Teni Hair & Beauty Studio <${process.env.MAIL_USER}>`,
         replyTo: email, // replies go to client
-        to: process.env.MAIL,
+        to: process.env.MAIL_USER,
         subject: "New Booking Received",
         html: `
             <h3>New Booking Details</h3>
@@ -57,7 +55,7 @@ router.post("/", async (req, res) => {
 
     // CLIENT AUTO-REPLY
     await transporter.sendMail({
-      from: `Teni Hair & Beauty Studio <${process.env.MAIL}>`,
+      from: `Teni Hair & Beauty Studio <${process.env.MAIL_USER}>`,
       to: email,
       subject: "Booking Confirmed – Teni Hair & Beauty Studio",
       html: `
