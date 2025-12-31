@@ -32,7 +32,7 @@ console.log("MAIL_PASS:", process.env.MAIL_PASS ? "SET" : "NOT SET");
       const [hour, minute] = time.split(":").map(Number);
       const period = hour >= 12 ? "PM" : "AM";
       const displayHour = hour % 12 || 12;
-      return `${displayHour}:${minute.toString().padStart(2, "0")} ${period}`;
+      return `${displayHour}:${"00"} ${period}`;
     };
 
 
