@@ -1,18 +1,29 @@
-import dotenv from "dotenv";
-dotenv.config();
-
 import express from "express";
-import cors from "cors";
-import bookingRoutes from "./routes/contact.js";
+import contactRouter from "./routes/contact.js"; // adjust path
 
 const app = express();
 
-app.use(cors());
+// Parse JSON bodies
 app.use(express.json());
 
-app.use("/api/contact", bookingRoutes);
+// // CORS (if your frontend is on a different domain)
+// import cors from "cors";
+// app.use(
+//   cors({
+//     origin: process.env.CLIENT_ORIGIN || "*", // e.g. "https://your-frontend.com"
+//   })
+// );
 
-const PORT = process.env.PORT || 5000;
-app.listen(PORT, () =>
-  console.log(`Backend running on port ${PORT}`)
-);
+// Mount the contact route
+app.use("/api/contact", contactRouter);
+
+// Basic health check
+app.get("/", (req, res) => {
+  res.send("Teni Hair & Beauty Studio API is running");
+});
+
+// Render uses PORT from env
+const PORT = process.env.PORT || 3000;
+app.listen(PORT, () => {
+  console.log(`Server listening on port ${PORT}`);
+});
