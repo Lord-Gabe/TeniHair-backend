@@ -16,8 +16,6 @@ router.post("/", async (req, res) => {
       time,
       message,
     } = req.body;
-    console.log("MAIL_USER:", process.env.MAIL_USER);
-console.log("MAIL_PASS:", process.env.MAIL_PASS ? "SET" : "NOT SET");
 
 
     const transporter = nodemailer.createTransport({
