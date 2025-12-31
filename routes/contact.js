@@ -3,6 +3,7 @@ import nodemailer from "nodemailer";
 
 const router = express.Router();
 
+
 router.post("/", async (req, res) => {
   try {
     const {
@@ -15,6 +16,9 @@ router.post("/", async (req, res) => {
       time,
       message,
     } = req.body;
+    console.log("MAIL_USER:", process.env.MAIL_USER);
+console.log("MAIL_PASS:", process.env.MAIL_PASS ? "SET" : "NOT SET");
+
 
     const transporter = nodemailer.createTransport({
       service: "gmail",
@@ -45,8 +49,8 @@ router.post("/", async (req, res) => {
             <p><strong>Service:</strong> ${service}</p>
             <p><strong>Subservice:</strong> ${subservice}</p>
             <p><strong>Specification:</strong> ${subservice2 || "N/A"}</p>
-            <p><strong>Date:</strong> ${date}</p>
-            <p><strong>Time:</strong> ${formatTime(time)}</p>
+            <p><strong>Date:</strong> ${date || "NIL"}</p>
+            <p><strong>Time:</strong> ${formatTime(time) || "NIL"}</p>
             <p><strong>Message:</strong> ${message || "None"}</p>
         `,
         });
