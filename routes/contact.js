@@ -38,9 +38,9 @@ router.post("/", async (req, res) => {
 
     // ADMIN EMAIL
     await transporter.sendMail({
-        from: `Teni Hair & Beauty Studio <${process.env.MAIL_USER}>`,
+        from: `Teni Hair & Beauty Studio`,
         replyTo: email, // replies go to client
-        to: process.env.MAIL_USER,
+        to: process.env.MAIL,
         subject: "New Booking Received",
         html: `
             <h3>New Booking Details</h3>
@@ -57,7 +57,7 @@ router.post("/", async (req, res) => {
 
     // CLIENT AUTO-REPLY
     await transporter.sendMail({
-      from: `Teni Hair & Beauty Studio <${process.env.MAIL_USER}>`,
+      from: `Teni Hair & Beauty Studio <${process.env.MAIL}>`,
       to: email,
       subject: "Booking Confirmed – Teni Hair & Beauty Studio",
       html: `
