@@ -9,7 +9,7 @@ const app = express();
 
 app.use(
   cors({
-    origin: "https://teni-hair-frontend.vercel.app/", // e.g. "https://your-frontend.com"
+    origin: "https://teni-hair-frontend.vercel.app", // e.g. "https://your-frontend.com"
     methods: ['GET', 'POST', 'PUT', 'DELETE'],
     credentials: true
   })
